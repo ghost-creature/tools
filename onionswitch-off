@@ -1,0 +1,8 @@
+#!/bin/bash
+cp ~/.proxychains/proxychains.conf.out ~/.proxychains/proxychains.conf
+
+
+cat ~/.proxychains/proxychains.conf
+
+
+

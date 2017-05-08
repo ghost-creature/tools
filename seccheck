@@ -1,0 +1,46 @@
+echo "running chkrootkit -checking for rootkits"
+echo '*********************************************'
+chkrootkit
+echo '*********************************************'
+
+echo 'checking for empty ports'
+echo '*********************************************'
+cat /etc/shadow | awk -F: '($2==""){print $1}'
+echo '*********************************************'
+echo 'iptables rules' 
+echo '*********************************************'
+iptables --list
+echo '*********************************************'
+echo 'listening ports'
+echo '*********************************************'
+netstat -tulpn 
+echo '*********************************************'
+echo 'security audit lynis'
+echo '*********************************************'
+lynis audit system
+echo '*********************************************'
+echo 'Logs'
+echo '*********************************************'
+timestamp=$(date +%s)
+cat /var/log/syslog /var/log/user.log /var/log/auth.log /var/log/faillog>> Logs-combi.$timestamp-log
+cat ./Logs-combi.$timestamp-log
+echo 'logfile saved as Logs-combi.'$timestamp'-log'
+echo '*********************************************'
+echo 'Cleaning up'
+echo '*********************************************'
+
+bleachbit -s /var/log
+mkdir /var/log
+bleachbit -s ~/.cache
+mkdir ~/.cache
+bleachbit -s ~/.mozilla/firefox/Crash Reports
+bleachbit -s ~/..t
+mkdir ~/..t
+cat /dev/null > ~/.bash_history
+echo '*********************************************'
+echo 'finished'
+
+
+
+
+
